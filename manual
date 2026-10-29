@@ -1,0 +1,278 @@
+// CMSC-520: Operating Systems
+// Project 1: A My Shell Program
+// Professor: Dr. Lee
+// File Created: 2026.10.18
+// File Updated: 2026.10.18
+
+Description of the Program:
+
+myshell is a command line shell written in c. The shell is created to operate in Unix/Linux environments and supports a suite of 8 internal commands. myshell also has the ability support unknown commands using fork() and execvp() to duplicate the process and execute using the environment. 
+
+Algorithm:
+
+MYSHELL(length_A, A) // Where A is the input argument array for the running program
+
+	maxNumCommands = 10 // Variable is a constant          
+
+	Set environment variable "shell" to absolute path of the shell
+
+	for n commands input by the user:
+		
+		cwd = current working directory
+		print "cwd>"
+		input = GET_STRING_INPUT(input)
+		commands = new array from 0 to maxNumCommands
+		commands = PARSE_INPUT(input, commands)
+	
+		command = commands[0]
+
+		if command is NULL or Empty:
+			ignore and continue
+
+		if command == "mycd":
+			if commands has > 2 arguments:
+				print Error
+			else:
+				CD(commands[1])
+			end if else
+
+		else if command == "myclr":
+			if commands has > 1 argument:
+				print Error
+			else:
+				Call the system to clear the screen using "clear"
+			end if else
+
+		else if command == "mydir":
+			if commands has > 2 arguments:
+				print Error
+			else:
+				DIR(commands[1])
+			end if else
+
+		else if command == "myenviron":
+			if commands has > 1 argument:
+				print Error
+			else:
+				PRINT_ENVIRONMENT_STRINGS()
+			end if else
+
+		else if command == "myecho:
+			if commands has < 2 arguments:
+				print Error
+			else:
+				comment = new array, contains commands[1] to commands[maxNumCommands - 1]
+				ECHO(comment)
+			end if else
+	
+		else if command == "myhelp"
+			if commands has > 1 arguments:
+				print Error
+			else:
+				Call the system to print readme with more tag using "more readme"
+			end if else
+
+		else if command == "mypause":
+			if commands has > 1 arguments:
+				print Error
+			else:
+				PAUSE()
+			end if else
+
+		else if command == "myquit":
+			if commands has > 1 arguments:
+				print Error
+			else:
+				EXIT(0)
+			end if else
+
+		else:
+			// external commands
+			fork into child process
+			
+			child:
+				Set environment variable "parent" to "shell"
+				Use execvp to execute commands
+				EXIT(0)
+			parent:
+				wait till child finishes
+
+		end if else
+
+	end loop
+
+end function
+
+GET_USER_INPUT(A) // Where A is the string in which input is being stored
+	B = user input
+	
+	for i = 0 to length of B:
+		if B[i] == '\r' OR B[i] == '\n':
+			B[i] = '\0'
+			end loop
+	end loop
+
+end function
+
+PARSE_INPUT(A, B) // Where A is the string input and B is the array parsed input is stored in
+	
+	delimeter = ' '
+	counter = 0
+	token = the first word in input separated by del
+
+	while token is not NULL:
+		commands[counter] = token
+		token = next word in input separated by del
+
+	end loop
+
+end function
+	
+PAUSE():
+	print pause prompt
+	wait for user to press enter
+
+end function
+
+ECHO(input): // Where input is the string to echo
+
+	for each word in input
+		print "word "
+	end loop
+
+	print '\n'
+
+end function
+
+CD(dir) // Where dir is the string that contains the directory
+	if directory is NULL OR Empty:
+		cwd = current working directory
+		print cwd
+	else:
+		change directory to dir
+		new_cwd = current working directory
+		set environment variable "PWD" to new_cwd
+	end if else
+
+end function
+
+DIR(dir) // Where dir is the string that contains the directory
+
+	if dir is NULL OR Empty:
+		Call system to execute "ls"
+	else: 
+		Call system to execute "ls dir"
+	end if else
+
+end function
+
+Algorithm Analysis:
+
+Starting with analysis of the functions used withing myshell, we get:
+
+	DIR - O(1)
+	CD - O(1)
+	ECHO - O(n) - The number of loops is dependent on the length n of the <comment> string
+	PAUSE - O(1)
+	PARSE_INPUT - O(1) - The max number of tokens will always be 10 so the function runs on constant time
+	GET_USER_INPUT - O(n) - the number of loops is dependent on the length n of the input string
+
+MYSHELL would then run with by the following:
+
+	the while loop is runs n times dependent on the number of times the user wishes to input commands. Each child will run on constant time not accounting for what the OS has to do to execute external commands. We get
+
+	O(n)(O(1) + O(1) + O(n) + O(1) + O(1) + O(n) + O(n))
+
+	giving a runtime of O(n^2) for MYSHELL.
+
+Description of Operations and Commands:
+
+The 8 built in commands supported are as follows:
+
+	mycd <directory> - changes the current active directory. If <directory> is left empty, 
+	                   the current directory is displayed. getcwd() is used to get the
+			   the current directory if no directory is given. If a directory is
+			   given, chdir() is used to change the directory and setenv() is used
+			   to update the "PWD" environment variable that keeps track of the
+			   current directory.
+
+	myclr - clears the screen. Uses system() and passes through the "clear" command to request
+		the Unix/Linux terminal clear the screen.
+
+	mydir <directory> - list the contents of <directory>. If <directory> is empty list contents 
+			    of current directory. Uses snprintf to build the command based on whether
+			    or not a directory was added as an argument. If there was no argument,	
+			    the command sent to system() is ls to display the current directories
+			    files. If there is an argument the command sent to system() is
+			    ls <directory> to print our the files in <directory>
+
+	myenviron - list all environment variables. Uses the external environment variable to print
+		    all environment variables using a for loop.
+
+	myecho <comment> - echoes <comment> back to the screen. Uses a for loop to print out the
+			   <comment> given as an argument.
+
+	myhelp - displays readme with the more tag. Uses system() with the command "more readme"
+
+	mypause - pauses the shell until the "enter" key is pressed. Uses getchar() to wait for the
+		  user to press the enter key before continuing normal shell operations.
+
+	myquit - exits shell using exit(0).
+
+The shell is used by entering one of the previous commands or an external command into the prompt. The command is then executed for the user. The shell will not execute any external cd commands to be processed within the child process.
+
+Performance Description:
+
+	Time:
+	Using the Unix/Linux built in time command:
+		real    2m36.207s
+		user    0m0.014s
+		sys     0m0.025s
+
+	Was the measured time running for both internal and external commands. The total
+	time spent running between the kernel and the program was 0.039s. The real elapsed
+	time is much longer due to awaiting input from the user. 
+
+	Using only internal commands, the measured time is as follows:
+		real    1m45.602s
+		user    0m0.018s
+		sys     0m0.008s
+	
+	The total time spent executing commands is 0.026s. The real elapsed time is again
+	much longer due to awaiting the users input.
+
+	Using only external commands (at least 8):
+		real    0m42.204s
+		user    0m0.006s
+		sys     0m0.026s
+
+	The total time spent executing external commands in the kernel is 0.026s. The
+	0.006s spent executing commands in the program was to quit the program using 
+	"myquit" and EXIT(). The real elapsed time is again much longer due to awaiting the users
+	input.
+
+	Memory:
+	Using valgrind to monitor memory usage, code ==19269== was reported after execution 
+	of the parent process and after the execution of each child process. This code
+	gives that the program run was clean with no memory errors or detected leaks.
+
+	Other Descriptors:
+	The maximum length for any command is 10, this means that the max number of words 	for the "myecho" command is 9.
+
+	The maximum character length for each string in a list of commands and arguments is
+	100. Meaning that each command and argument must be less than 100 characters long.
+
+	The maximum directory length is 1024. Every time a directory is retrieved it must
+	be within the 1024 character limit.
+
+Description of Environment Concepts:
+
+myshell uses environment variables to trace and manage its processes. It stores the absolute path into the "shell" variable which is both the master shell and parent shell path. When a child is forked, the absolute path of the parent is passed and stored into the "parent" variable for child to parent memory before it is replaced by the path of created by execvp. On the other hand, PWD ensures that any change in directory is remembered in the system and every process knows what the current directory is.
+
+Overall Layout and Display of Understanding:
+
+The shell is designed to loop until the user quits the shell. The maximum command length is 100, the max number of commands is 10, and the max directory size is 1024. The method used to accomplish this is a while(1) loop. The current directory is fetched at the beginning of every loop to be displayed in the command line prompt. User input is read and parsed using functions that utilize fgets(), strcspn()-for sanitization of the string, and strtok. All commands are modeled using if-else statements. Most commands that could not be executed in a simple system call are handled within their own functions whose names are given based on the command. All internal commands execute withing the context of the shell, external commands are handled by child processes. The parent will fork() a child process and wait() for a child process to complete before continuing. The child process sets the "parent" variable to the absolute path of the parent process for process memory and then executes the external command using execvp.
+
+Using fork() for the shell to handle external commands without crashing due to errors the shell itself cannot handle. If execvp is unable to properly execute a command, the child is left to handle the problem and the parent stay unaffected even if the child crashes. Using wait() insures that the system stays synchronized and the user cannot continue to use the parent process while the child is running. Environment variables help ensures the state of the process is not forgotten when an external command is run. 
+
+

@@ -1,0 +1,186 @@
+Script started on 2026-10-22 17:48:55-04:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="80" LINES="24"]
+bash: alias: -1: not found
+[?2004hcm7943@mct164s05:~/f26/cmsc521/project1$ cd project1/mkdir project1[3Pcd cmsc521/mkdir cmsc521[K[K[K[K[K[K[K[K[K[K[K[K[Kmake
+[?2004lgcc                                   -Wall                          myshell.o                        -o myshell              # Output file
+[?2004hcm7943@mct164s05:~/f26/cmsc521/project1$ ./myshell
+[?2004l/home/cm7943/f26/cmsc521/project1>mycd
+/home/cm7943/f26/cmsc521/project1
+/home/cm7943/f26/cmsc521/project1>mycd test
+/home/cm7943/f26/cmsc521/project1/test>mycd ..
+/home/cm7943/f26/cmsc521/project1>mycd cd
+Error: directory could not be found.
+/home/cm7943/f26/cmsc521/project1>myclr h clear
+Error: myclr contains too many arguments.
+/home/cm7943/f26/cmsc521/project1>myclr
+[H[2J[3J/home/cm7943/f26/cmsc521/project1>currentdir
+/home/cm7943/f26/cmsc521/project1>mydir
+makefile  manual  myshell  myshell.c  myshell.o  readme  test  typescript
+/home/cm7943/f26/cmsc521/project1>mydir dire    test
+test1  test2  test3
+/home/cm7943/f26/cmsc521/project1>mydit r test test
+Error: mydir contains too many arguments.
+/home/cm7943/f26/cmsc521/project1>myenviron
+SHELL=/bin/bash
+SESSION_MANAGER=local/mct164s05:@/tmp/.ICE-unix/3093,unix/mct164s05:/tmp/.ICE-unix/3093
+WINDOWID=65011715
+QT_ACCESSIBILITY=1
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-xubuntu:/etc/xdg
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+XDG_MENU_PREFIX=xfce-
+CLUTTER_BACKEND=x11
+GNOME_KEYRING_CONTROL=/run/user/1476399576/keyring
+SSH_AUTH_SOCK=/run/user/1476399576/keyring/ssh
+DESKTOP_SESSION=xubuntu
+XDG_SEAT=seat0
+KRB5CCNAME=FILE:/tmp/krb5cc_1476399576
+PWD=/home/cm7943/f26/cmsc521/project1
+XDG_SESSION_DESKTOP=xubuntu
+LOGNAME=cm7943
+QT_QPA_PLATFORMTHEME=gtk2
+XDG_SESSION_TYPE=x11
+PANEL_GDK_CORE_DEVICE_EVENTS=0
+GPG_AGENT_INFO=/run/user/1476399576/gnupg/S.gpg-agent:0:1
+XAUTHORITY=/home/cm7943/.Xauthority
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/cm7943
+HOME=/home/cm7943
+LANG=en_US.UTF-8
+XDG_CURRENT_DESKTOP=XFCE
+VTE_VERSION=7600
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+XDG_SESSION_CLASS=user
+TERM=xterm-256color
+GTK_OVERLAY_SCROLLING=0
+USER=cm7943
+DISPLAY=:0.0
+SHLVL=2
+XDG_VTNR=7
+XDG_SESSION_ID=c2
+XDG_RUNTIME_DIR=/run/user/1476399576
+DEBUGINFOD_URLS=https://debuginfod.ubuntu.com 
+XDG_DATA_DIRS=/usr/share/xubuntu:/usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+GDMSESSION=xubuntu
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1476399576/bus
+OLDPWD=/home/cm7943/f26/cmsc521/project1/test
+_=./myshell
+shell=/home/cm7943/f26/cmsc521/project1/myshell
+/home/cm7943/f26/cmsc521/project1>myenvio ron en
+Error: myenviron contains too many arguments.
+/home/cm7943/f26/cmsc521/project1>myecho
+Error: <comment> cannot be empty
+/home/cm7943/f26/cmsc521/project1>myecho Hello    Work ld! !!
+Hello World! !! 
+/home/cm7943/f26/cmsc521/project1>myhelp help
+Error: myhelp contains too many arguments.
+/home/cm7943/f26/cmsc521/project1>myhelp
+// CMSC-520: Operating Systems
+// Project 1: A My Shell Program
+// Professor: Dr. Lee
+// File Created: 2026.10.18
+// File Updated: 2026.10.18
+
+
+Project 1: A My Shell Program
+
+Name:
+myshell - c shell with basic built in commands and external command execution
+
+Synopsis:
+myshell
+
+Description:
+This project is a command line shell written in c. It supports built in commands
+ such as "mycd" and "mydir" as well as the execution of external system programs
+ using fork() and execvp. The command line prompt contains the pathname followed
+ by > and displays as: "currentdir>"
+
+Files Included:
+        myshell.c
+[7m--More--(27%)[27m        readme
+[7m--More--(28%)[27m        makefile
+[7m--More--(28%)[27m[K	manual
+[7m--More--(29%)[27m[K	typescript
+[7m--More--(29%)[27m[K
+[7m--More--(29%)[27mHow to Compile:
+[7m--More--(30%)[27m        1. gcc -o myshell myshell.c
+[7m--More--(32%)[27m        2. make myshell
+[7m--More--(33%)[27m[K
+[7m--More--(33%)[27mHow to Run:[K
+[7m--More--(33%)[27m        ./myshell
+[7m--More--(34%)[27m[K
+[7m--More--(34%)[27mKnown Bugs:[K
+[7m--More--(35%)[27m        N/A[K
+[7m--More--(35%)[27m[K
+[7m--More--(35%)[27mBuilt-In Commands:
+[7m--More--(36%)[27m[K	mycd <directory> - changes the current active directory. If <directory> 
+[7m--More--(39%)[27mis left empty, 
+[7m--More--(40%)[27m[K	the current directory is displayed. 
+[7m--More--(42%)[27m[K		Use: currentdir> mycd newdir
+[7m--More--(43%)[27m[K	 	     newdir>
+[7m--More--(44%)[27m[K		
+[7m--More--(44%)[27m[K		Use: currentdir> mycd
+[7m--More--(45%)[27m[K		     currentdir
+[7m--More--(46%)[27m[K
+[7m--More--(46%)[27m[K	myclr - clears the screen
+[7m--More--(47%)[27m[K		Use: currentdir> myclr
+[7m--More--(48%)[27m[K
+[7m--More--(49%)[27m[K	mydir <directory> - list the contents of <directory>. If <directory> is 
+[7m--More--(52%)[27mempty list contents 
+[7m--More--(53%)[27m[K	of current directory.
+[7m--More--(54%)[27m[K		Use: currentdir> mydir newdir
+[7m--More--(55%)[27m[K		     new_file1  new_file2  new_file3
+[7m--More--(57%)[27m[K		
+[7m--More--(57%)[27m[K		Use: currentdir> mydir
+[7m--More--(58%)[27m[K		     file1  file2  file3
+[7m--More--(60%)[27m[K
+[7m--More--(60%)[27m[K	myenviron - list all environment variables.
+[7m--More--(62%)[27m[K		Use: currentdir> myenviron
+[7m--More--(63%)[27m[K		     environment variables
+[7m--More--(64%)[27m[K
+[7m--More--(64%)[27m[K	myecho <comment> - echoes <comment> back to the screen.
+[7m--More--(67%)[27m[K		Use: currentdir> myecho Hello!
+[7m--More--(68%)[27m[K		     Hello!
+[7m--More--(69%)[27m[K
+[7m--More--(69%)[27m[K	myhelp - displays readme with the more tag.
+[7m--More--(71%)[27m[K		Use: currentdir> myhelp
+[7m--More--(72%)[27m[K		     readme information
+[7m--More--(73%)[27m[K		     More...
+[7m--More--(74%)[27m[K
+[7m--More--(74%)[27m[K	mypause - pauses the shell until the "enter" key is pressed.
+[7m--More--(77%)[27m[K		Use: currentdir> "mypause"
+[7m--More--(78%)[27m[K		     Press [Enter] to continue...
+[7m--More--(80%)[27m[K
+[7m--More--(80%)[27m[K	myquit - exits shell.
+[7m--More--(81%)[27m[K		Use: currentdir> myquit
+[7m--More--(82%)[27m[K
+[7m--More--(82%)[27mExternal Commands:
+[7m--More--(83%)[27mAll external commands can be entered into the shell as normal commands and will 
+[7m--More--(87%)[27mbe executed in a child process using execvp.
+[7m--More--(89%)[27m[K
+[7m--More--(89%)[27mEnvironment Variables:
+[7m--More--(90%)[27mmyshell uses the following environment variables
+[7m--More--(92%)[27m[K	shell: stores the absolute pathname of the running shell
+[7m--More--(95%)[27m[K	parent: inherited by child process to track the parent shell
+[7m--More--(98%)[27m[K	PWD: tracks the current working directory
+[7m--More--(99%)[27m[K
+/home/cm7943/f26/cmsc521/project1>mypause pause
+Error: mypause contains too many arguments.
+/home/cm7943/f26/cmsc521/project1>mypause
+Press [Enter] to continue...
+/home/cm7943/f26/cmsc521/project1>cd
+/home/cm7943/f26/cmsc521/project1>ls
+makefile  manual  myshell  myshell.c  myshell.o  readme  test  typescript
+/home/cm7943/f26/cmsc521/project1>date
+Thu Oct 22 05:51:41 PM EDT 2026
+/home/cm7943/f26/cmsc521/project1> lst  tet st
+test1  test2  test3
+/home/cm7943/f26/cmsc521/project1>echo Hello World!
+Hello World!
+/home/cm7943/f26/cmsc521/project1>myquit quit
+Error: myquit contains too many arguments.
+/home/cm7943/f26/cmsc521/project1>myquit
+[?2004hcm7943@mct164s05:~/f26/cmsc521/project1$ [?2004l
+exit
+
+Script done on 2026-10-22 17:52:26-04:00 [COMMAND_EXIT_CODE="0"]

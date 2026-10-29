@@ -1,0 +1,84 @@
+// CMSC-520: Operating Systems
+// Project 1: A My Shell Program
+// Professor: Dr. Lee
+// File Created: 2026.10.18
+// File Updated: 2026.10.18
+
+
+Project 1: A My Shell Program
+
+Name:
+myshell - c shell with basic built in commands and external command execution
+
+Synopsis:
+myshell
+
+Description:
+This project is a command line shell written in c. It supports built in commands such as "mycd" and "mydir" as well as the execution of external system programs using fork() and execvp. The command line prompt contains the pathname followed by > and displays as: "currentdir>"
+
+Files Included:
+        myshell.c
+        readme
+        makefile
+	manual
+	typescript
+
+How to Compile:
+        1. gcc -o myshell myshell.c
+        2. make myshell
+
+How to Run:
+        ./myshell
+
+Known Bugs:
+        N/A
+
+Built-In Commands:
+	mycd <directory> - changes the current active directory. If <directory> is left empty, 
+	the current directory is displayed. 
+		Use: currentdir> mycd newdir
+	 	     newdir>
+		
+		Use: currentdir> mycd
+		     currentdir
+
+	myclr - clears the screen
+		Use: currentdir> myclr
+
+	mydir <directory> - list the contents of <directory>. If <directory> is empty list contents 
+	of current directory.
+		Use: currentdir> mydir newdir
+		     new_file1  new_file2  new_file3
+		
+		Use: currentdir> mydir
+		     file1  file2  file3
+
+	myenviron - list all environment variables.
+		Use: currentdir> myenviron
+		     environment variables
+
+	myecho <comment> - echoes <comment> back to the screen.
+		Use: currentdir> myecho Hello!
+		     Hello!
+
+	myhelp - displays readme with the more tag.
+		Use: currentdir> myhelp
+		     readme information
+		     More...
+
+	mypause - pauses the shell until the "enter" key is pressed.
+		Use: currentdir> "mypause"
+		     Press [Enter] to continue...
+
+	myquit - exits shell.
+		Use: currentdir> myquit
+
+External Commands:
+All external commands can be entered into the shell as normal commands and will be executed in a child process using execvp.
+
+Environment Variables:
+myshell uses the following environment variables
+	shell: stores the absolute pathname of the running shell
+	parent: inherited by child process to track the parent shell
+	PWD: tracks the current working directory
+
